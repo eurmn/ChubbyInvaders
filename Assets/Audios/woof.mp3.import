@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/woof.mp3-41ab555d027fd586c133cb0aa9d69944.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audios/woof.mp3"
+dest_files=[ "res://.import/woof.mp3-41ab555d027fd586c133cb0aa9d69944.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -12,6 +12,7 @@ public class Player : KinematicBody2D
     private bool shootQueued = false;
     private float cookieCooldown = .3f;
     private float cookieCooldownTimer = 0;
+    private AudioStreamPlayer2D SFX;
 
 
     // Called when the node enters the scene tree for the first time.
@@ -19,6 +20,7 @@ public class Player : KinematicBody2D
     {
         cookieMissile = GD.Load<PackedScene>("res://Scenes/CookieMissile.tscn");
         GetNode<Sprite>("Fire").GetNode<AnimationPlayer>("FireAnimPlayer").Play("Active");
+        SFX = GetNode<AudioStreamPlayer2D>("SFX");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,7 +39,11 @@ public class Player : KinematicBody2D
 
         if (Input.IsActionPressed("shoot"))
         {
-            shootQueued = true;
+            if (cookieCooldownTimer <= 0)
+            {
+                shootQueued = true;
+                cookieCooldownTimer = cookieCooldown;
+            }
         }
     }
 
@@ -46,12 +52,11 @@ public class Player : KinematicBody2D
         if (cookieCooldownTimer > 0)
         {
             cookieCooldownTimer -= delta;
-        }
-        if (shootQueued && cookieCooldownTimer <= 0)
-        {
-            Shoot();
-            shootQueued = false;
-            cookieCooldownTimer = cookieCooldown;
+            if (shootQueued)
+            {
+                Shoot();
+                shootQueued = false;
+            }
         }
         velocity = new Vector2(speed * direction, 0);
         MoveAndSlide(velocity);
@@ -62,5 +67,6 @@ public class Player : KinematicBody2D
         var newCookie = cookieMissile.Instance<CookieMissile>();
         newCookie.Position = Position;
         GetTree().Root.AddChild(newCookie);
+        SFX.Play();
     }
 }

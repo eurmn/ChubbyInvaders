@@ -23,7 +23,6 @@ public class CookieMissile : KinematicBody2D
     public void GetEaten(Node _body)
     {
         eater.StopEating();
-        GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
         gettingEatten = true;
         GetNode<Sprite>("Sprite").Frame = 22;
         eater.DeathZone.Disconnect("body_entered", this, nameof(GetEaten));

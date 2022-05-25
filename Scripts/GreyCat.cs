@@ -8,6 +8,8 @@ public class GreyCat : Chubby
 
     protected override byte NeededCookies => 5;
 
+    protected override AudioStream satisfactionSFX { get; set; }
+
     private static int GreyCatCount = 0;
 
     // Called when the node enters the scene tree for the first time.
@@ -17,5 +19,7 @@ public class GreyCat : Chubby
         GreyCatCount++;
         Position = new Vector2(MIN_POSITION + 20 * (GreyCatCount - 1), Position.y);
         StartPosition = Position.x;
+
+        satisfactionSFX = (AudioStream)GD.Load("res://Assets/Audios/meow.mp3");
     }
 }
